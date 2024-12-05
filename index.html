@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="MyTheme.css">
+    <title>WeatherNow-a weather app</title>
+    <link rel="icon" href="images/clouds.png" type="image/x-icon">
+</head>
+<body>
+    <div id="container"> 
+        <div id="icon-title">
+            <img src="images/clouds.png" id="web-icon">
+            <h1 id="web-title">Weather<span id="now">Now</span></h1>
+        </div>  
+       
+        <div id="search-part">
+    <input id="city-input" type="text" placeholder=" Enter Your City">
+    <img src="images/search.png" id="search-button" onclick="fetchWeather()">
+</div>
+    <p id="weatherResult"></p>
+
+    
+
+        <h1 class="data" id="city"></h1>
+        <h3 id="date"></h3>
+
+
+        <div id="main-part">
+            <div id="temp-place">
+                <h1 class="data" id="temp"></h1>
+    
+                <div id="max-min">
+                    <h4 id="max"> </h4>
+                    <h4 id="min"></h4>
+                </div>
+              
+            </div>
+            <div id="weather-place">
+                <img src="" alt="weather-pic" id="weather-pic">
+                <h1 id="weather"></h1>
+                <h2 id="weather-desc"></h2>
+            </div>
+        </div>
+       <div id="bottom-outer-container">
+
+
+        <div id="bottom-part">
+
+            <div id="wind-humidity-place">
+                <div id="humidity-place">
+                    <img src="images/humidity.png" alt="humidity" id="humidity-pic">
+                    <h1 class="data" id="humidity"></h1>
+                </div>
+            
+                <div id="wind-place">
+                    <img src="images/wind.png" alt="wind" id="wind-pic">
+                    <h1 class="data" id="wind"></h1>
+                </div>
+            </div>
+           
+           <div id="sunrise-set-place">
+        
+            <div id="sunrise-place">
+                <img id="rise-pic" src="sunrise-Flaticon.png" alt="">
+                <h3 class="data" id="sunrise"></h3> 
+              </div>
+              <div id="sunset-place">
+                <img id="set-pic" src="sunset-Flaticon.png" alt="">
+                <h3 class="data" id="sunset"></h3> 
+              </div>
+        
+           </div>
+        
+           </div>
+
+       </div>
+   
+   
+ 
+   
+    
+</div>
+ 
+
+
+
+
+    <script>
+        
+        
+
+        const apiKey = "ea6650e0441d86ec9ccc6280f1bf4e2d";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const today = daysOfWeek[new Date().getDay() ];
+
+
+        function startWeather(){
+            if (localStorage.getItem("storedCity"))
+        {
+            document.querySelector("#date").innerHTML = today+", "+ new Date().toLocaleDateString();
+            checkWeather(localStorage.getItem("storedCity"));
+
+                document.querySelector("#city").classList.remove('hidden');
+                document.querySelector("#weather").classList.remove('hidden');
+                document.querySelector("#weather-pic").classList.remove('hidden');
+                document.querySelector("#weather-desc").classList.remove('hidden');
+                document.querySelector("#temp").classList.remove('hidden');
+                document.querySelector("#max").classList.remove('hidden');
+                document.querySelector("#min").classList.remove('hidden');
+                document.querySelector("#humidity").classList.remove('hidden');
+                document.querySelector("#wind").classList.remove('hidden');
+                document.querySelector("#sunrise").classList.remove('hidden');
+                document.querySelector("#sunset").classList.remove('hidden');
+                document.querySelector("#humidity-pic").classList.remove('hidden');
+                document.querySelector("#wind-pic").classList.remove('hidden');
+                document.querySelector("#rise-pic").classList.remove('hidden');
+                document.querySelector("#set-pic").classList.remove('hidden');
+        }
+            else  { 
+                document.querySelector("#city").classList.add('hidden');
+                document.querySelector("#weather").classList.add('hidden');
+                document.querySelector("#weather-pic").classList.add('hidden');
+                document.querySelector("#weather-desc").classList.add('hidden');
+                document.querySelector("#temp").classList.add('hidden');
+                document.querySelector("#max").classList.add('hidden');
+                document.querySelector("#min").classList.add('hidden');
+                document.querySelector("#humidity").classList.add('hidden');
+                document.querySelector("#wind").classList.add('hidden');
+                document.querySelector("#sunrise").classList.add('hidden');
+                document.querySelector("#sunset").classList.add('hidden');
+                document.querySelector("#humidity-pic").classList.add('hidden');
+                document.querySelector("#wind-pic").classList.add('hidden');
+                document.querySelector("#rise-pic").classList.add('hidden');
+                document.querySelector("#set-pic").classList.add('hidden');
+        };
+            
+            
+        }
+        function fetchWeather(){
+            localStorage.setItem("storedCity",document.getElementById('city-input').value);
+            let city = localStorage.getItem("storedCity").trim();
+
+            if(!city)alert("please enter a city name");
+
+            else {checkWeather(city)
+
+                document.querySelector("#date").innerHTML = today+", "+ new Date().toLocaleDateString();
+                document.querySelector("#city").classList.remove('hidden');
+                document.querySelector("#weather").classList.remove('hidden');
+                document.querySelector("#weather-pic").classList.remove('hidden');
+                document.querySelector("#weather-desc").classList.remove('hidden');
+                document.querySelector("#temp").classList.remove('hidden');
+                document.querySelector("#max").classList.remove('hidden');
+                document.querySelector("#min").classList.remove('hidden');
+                document.querySelector("#humidity").classList.remove('hidden');
+                document.querySelector("#wind").classList.remove('hidden');
+                document.querySelector("#sunrise").classList.remove('hidden');
+                document.querySelector("#sunset").classList.remove('hidden');
+                document.querySelector("#humidity-pic").classList.remove('hidden');
+                document.querySelector("#wind-pic").classList.remove('hidden');
+                document.querySelector("#rise-pic").classList.remove('hidden');
+                document.querySelector("#set-pic").classList.remove('hidden');
+            };
+
+        }
+      
+   
+
+        function convertUnixToTime(UT){
+            const date = new Date(UT *1000);
+
+            const hours = date.getHours();
+            const minutes = date.getMinutes();
+
+            return (hours + ":" + (minutes < 10 ? '0' + minutes : minutes));
+        }
+        
+       
+
+        async function checkWeather(Givencity) {
+            try{
+            const response = await fetch(apiUrl + Givencity + '&appid=' + apiKey);
+            let data = await response.json();
+
+            if(data.cod ==='404') {
+                showError("City not found, Please enter a valid city name.")
+                    return;
+                
+            
+            }
+
+            let weatherImage = {
+                "Clear": "images/clear.png",
+                "Clouds": "images/clouds.png",
+                "Drizzle": "images/drizzle.png",
+                "Mist": "images/mist.png",
+                "Rain": "images/rain.png",
+                "Snow": "images/snow.png",
+                "Thunderstorm": "images/thunderstorm.png"
+            }
+
+          let cityName = data.name;
+          let temperature = data.main.temp;
+          let weatherState = data.weather[0].main;
+          let weatherDescription = data.weather[0].description;
+          let humidityData =  data.main.humidity ;
+          let maxTemp = data.main.temp_max;
+          let minTemp = data.main.temp_min;
+          let windSpeed = data.wind.speed;
+          let sunriseTime = data.sys.sunrise;
+          let sunsetTime = data.sys.sunset;
+            
+            document.querySelector("#city").innerHTML = cityName + " " ;
+            document.querySelector("#weather").innerHTML= weatherState ;
+            document.querySelector("#weather-desc").innerHTML= weatherDescription;
+            document.querySelector("#weather-pic").src= weatherImage[data.weather[0].main];
+            document.querySelector("#temp").innerHTML = Math.round(temperature) +"°C";
+            document.querySelector("#max").innerHTML = "Max: " + Math.round(maxTemp) +"°C";
+            document.querySelector("#min").innerHTML = "Min: " + Math.round(minTemp) +"°C";
+            document.querySelector("#humidity").innerHTML = "Humidity: " +humidityData+ "%";
+            document.querySelector("#wind").innerHTML = "Wind Speed: " +Math.round(windSpeed * 1.60934) + "km/h" ;
+            document.querySelector("#sunrise").innerHTML = "Sunrise " + convertUnixToTime(sunriseTime);
+            document.querySelector("#sunset").innerHTML = "Sunset " + convertUnixToTime(sunsetTime);
+        }catch (error) {
+            showError("An error occurred. Please try again later.");
+            console.error("Error fetching data:" , error);
+        }
+
+
+
+
+            console.log(data);
+            
+        }
+        function showError(message){
+
+            document.getElementById('weatherResult').innerHTML = message;
+
+        }
+        
+        startWeather()
+
+        
+    </script>
+</body>
+</html>

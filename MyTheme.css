@@ -1,0 +1,265 @@
+*{
+    font-family: monospace ;
+    margin: 0;
+    padding: 0;
+   color: white;
+}
+body{
+    background-color: #34444e;
+    display: flex;
+    justify-content: center;
+}
+#container{
+    position: relative;
+    margin: 20px;
+    padding-top: 40px;
+    width: 95%;
+    min-height: 750px;
+    height: auto;
+    border-radius: 30px;
+    background: linear-gradient(160deg,#00008e, #009dff, #00008e);
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-align: center;
+}
+#icon-title{
+    scale: 1.3;
+    height: 30px;
+    display: flex;
+    position: absolute;
+    left:50px;
+    top: 30px;
+}
+#web-title{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#web-icon{
+    scale: 1;
+}
+#now{
+    color: #f6ff00;
+}
+#city-input{
+    color: black;
+    width: 70%;
+    max-width: 500px;
+    height: 30px;
+    border-radius: 50px;
+    border: none;
+}
+
+#search-button{
+    cursor: pointer;
+    position: relative;
+    top: 23px;
+    right: 50px;
+    scale: 0.5;
+}
+.data{
+    margin-top: 20px;
+    text-align: left;
+}
+
+#city{
+    transition: all 0.5s ease;
+    font-size: 4rem;
+    text-align: left;
+    margin-left: 30px;
+    padding-bottom: 3px;
+    border-bottom: 5px solid white;
+    width: 90%;
+}
+#city:hover{
+    color: #9693e0;
+}
+#date{
+margin-top: 2px;
+margin-right: 25px;
+text-align: end;
+}
+#main-part{
+    display: flex;
+    justify-content: space-around;
+}
+#weather-place{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    scale: 0.9;
+    
+}
+#weather-pic{
+    scale: 0.8;
+}
+#weather{
+    transition: all 0.5s ease;
+    font-size: 5.5rem;
+    font-weight: lighter;
+}
+#weather:hover{
+    color: #9693e0;
+}
+#weather-desc{
+position: relative;
+top: 25px;
+font-weight: 100;
+color: #ffffffbf;
+}
+
+#temp-place{
+    position: relative;
+    top: 40px;
+    scale: 1.1;
+}
+#temp{
+    transition: all 0.5s ease;
+    font-size: 8rem;
+}
+#temp:hover{
+    color: #9693e0;
+}
+#max-min{
+    display: flex;
+    justify-content: space-between;
+    scale: 1.5;
+    margin-top: 100px;
+    margin-left: 10%;
+}
+#max{
+    border-right: 1px solid #ffffffcb;
+    padding-right: 5px;
+    font-size: 1.5rem;
+    color: #31ea31;
+    font-weight: lighter;
+}
+#min{
+font-size: 1.5rem;
+color: #ab0505;
+font-weight: lighter;
+}
+
+#bottom-part{
+    border-top: 3px solid #ffffff;
+    padding-top: 25px;
+    position: relative;
+    top: 100px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}
+
+#humidity{
+margin-left: 25px;
+}
+#wind{
+
+margin-left: 25px;
+
+}
+
+#humidity-place, #wind-place{
+    display: flex;
+}
+
+#humidity-pic, #wind-pic{
+    height: 30px;
+    width: 30px;
+    position: relative;
+    left: 20px;
+    top: 17px;
+}
+#sunrise-set-place{
+    border-right: 2px solid white;
+    padding-right: 15%;
+}
+#sunrise-place{
+margin-left: 5px;
+margin-top: 15px;
+display: flex;
+flex-direction: row;
+}
+#rise-pic, #set-pic{
+height: 50px;
+width: 50px;
+}
+
+#sunrise{
+    margin-left: 15px;
+}
+
+
+#sunset-place{
+margin-left: 5px;
+margin-top: 15px;
+display: flex;
+flex-direction: row;
+}
+#sunset{
+ margin-left: 15px;
+}
+
+
+.hidden{
+    display: none;
+}
+
+
+/*                       PHONE VIEW              */
+
+@media (max-width:650px) {
+    #container{
+        height: auto;
+    }
+  #city{
+    font-size: 2.5rem;
+  }
+  #weather{
+    font-size: 3rem;
+  }
+  #temp{
+    margin-left: 15px;
+    font-size: 4rem;
+  }
+  #max-min{
+    flex-direction: column;
+    scale: 1;
+  }
+  #max{
+    border: none;
+    border-bottom: 1px solid #ffffffcb;
+    padding: 0px;
+    padding-bottom: 5px;
+  }
+  #bottom-outer-container{
+    display: flex;
+    justify-content: center;
+  }
+  #bottom-part{
+    width: 80%;
+    flex-direction: column;
+  }
+  #wind-humidity-place{
+    display: flex;
+    margin-bottom: 30px;
+  }
+
+#humidity, #wind{
+    font-size: 1.4rem;
+    margin-left: 25px;
+}
+#humidity-pic, #wind-pic{
+    scale: 0.7;
+}
+  #sunrise-set-place{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 2px;
+    border: none;
+    border-top: 2px solid white;
+}
+
+ }
+
+
+
+
