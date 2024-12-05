@@ -208,7 +208,7 @@ flex-direction: row;
 
 @media (max-width:650px) {
     #container{
-        height: auto;
+        height: 780px;
     }
   #city{
     font-size: 2.5rem;
