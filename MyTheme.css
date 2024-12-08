@@ -203,12 +203,18 @@ flex-direction: row;
     display: none;
 }
 
+#rights{
+  scale: 0.7;
+  display: flex;
+  opacity: 0.5;
+}
+
 
 /*                       PHONE VIEW              */
 
 @media (max-width:650px) {
     #container{
-        height: auto;
+        height: 780px;
     }
   #city{
     font-size: 2.5rem;
