@@ -1,15 +1,13 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const API_KEY = process.env.API_KEY;
 
-// Allow frontend to access backend (CORS)
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // allow all for now
-  next();
-});
+app.use(cors());
 
 app.get('/weather', async (req, res) => {
   const { city } = req.query;
@@ -19,16 +17,21 @@ app.get('/weather', async (req, res) => {
       params: {
         q: city,
         units: 'metric',
-        appid: process.env.API_KEY
+        appid: API_KEY
       }
     });
 
     res.json(response.data);
+
   } catch (err) {
-    res.status(500).json({ error: 'Error fetching weather data' });
+    if (err.response) {
+      res.status(err.response.status).json(err.response.data);  
+    } else {
+      res.status(500).json({ error: 'Server error' });
+    }
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Backend running at http://localhost:` + PORT);
+  console.log(`✅ Backend running on port ${PORT}`);
 });
