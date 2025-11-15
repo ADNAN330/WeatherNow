@@ -7,10 +7,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.API_KEY;
 
+// Enable CORS for all origins and methods, including preflight requests
 app.use(cors());
+app.options('*', cors()); // Handles preflight OPTIONS for all routes
 
 app.get('/weather', async (req, res) => {
-  const { "*", city } = req.query;
+  const { city } = req.query;
 
   try {
     const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
