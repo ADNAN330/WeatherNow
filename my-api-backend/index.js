@@ -10,7 +10,7 @@ const API_KEY = process.env.API_KEY;
 app.use(cors());
 
 app.get('/weather', async (req, res) => {
-  const { city } = req.query;
+  const { "*", city } = req.query;
 
   try {
     const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
