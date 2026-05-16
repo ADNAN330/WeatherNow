@@ -166,7 +166,7 @@
 
         async function checkWeather(Givencity) {
             try{
-                const response = await fetch(`https://weathernow-ojyy.onrender.com`  + Givencity);
+                const response = await fetch(`https://weathernow-ojyy.onrender.com/weather?city=`  + Givencity);
                 const data = await response.json();
 
             if(data.cod ==='404') {
