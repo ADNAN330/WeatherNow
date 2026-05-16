@@ -3,7 +3,11 @@ import axios from "axios";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+const app = express();
 
+import cors from "cors";
+
+app.use(cors());
 dotenv.config();
 
 const app = express();
