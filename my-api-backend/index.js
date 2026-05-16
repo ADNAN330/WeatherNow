@@ -3,26 +3,26 @@ import axios from "axios";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-const app = express();
-
 import cors from "cors";
 
-app.use(cors());
 dotenv.config();
 
 const app = express();
 
+app.use(cors());
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, ".//public")));
+// IMPORTANT: correct static path
+app.use(express.static(path.join(__dirname, "public")));
 
-
+// serve frontend
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-
+// API route
 app.get("/weather", async (req, res) => {
   try {
     const city = req.query.city;
