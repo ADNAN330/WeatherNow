@@ -1,39 +1,45 @@
-const express = require('express');
-const axios = require('axios');
-const cors = require('cors');
-require('dotenv').config();
+import express from "express";
+import axios from "axios";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
+dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const API_KEY = process.env.API_KEY;
 
-// Enable CORS for all origins and methods, including preflight requests
-app.use(cors());
-app.options('*', cors()); // Handles preflight OPTIONS for all routes
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.get('/weather', async (req, res) => {
-  const { city } = req.query;
+app.use(express.static(path.join(__dirname, "../public")));
 
+// serve frontend
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
+// API route
+app.get("/weather", async (req, res) => {
   try {
-    const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
-      params: {
-        q: city,
-        units: 'metric',
-        appid: API_KEY
+    const city = req.query.city;
+
+    const response = await axios.get(
+      "https://api.openweathermap.org/data/2.5/weather",
+      {
+        params: {
+          q: city,
+          appid: process.env.OPENWEATHER_API_KEY,
+          units: "metric",
+        },
       }
-    });
+    );
 
     res.json(response.data);
-
   } catch (err) {
-    if (err.response) {
-      res.status(err.response.status).json(err.response.data);  
-    } else {
-      res.status(500).json({ error: 'Server error' });
-    }
+    res.status(500).json({ error: "Failed to fetch weather" });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`✅ Backend running on port ${PORT}`);
+app.listen(3000, () => {
+  console.log("Running on http://localhost:3000");
 });

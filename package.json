@@ -1,0 +1,27 @@
+{
+  "name": "weathernow",
+  "version": "1.0.0",
+  "description": "It is a weather web application that shows current weather state, temperature (max and min also), date and day, and other weather information that will help everyone.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ADNAN330/WeatherNow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ADNAN330/WeatherNow/issues"
+  },
+  "homepage": "https://github.com/ADNAN330/WeatherNow#readme",
+  "dependencies": {
+    "axios": "^1.16.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}

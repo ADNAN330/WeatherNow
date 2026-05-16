@@ -94,55 +94,48 @@
 
     <script>
         
-        
-
     
+        main_elements = [
+            document.querySelector("#city"),
+            document.querySelector("#weather"),
+            document.querySelector("#weather-pic"),
+            document.querySelector("#weather-desc"),
+            document.querySelector("#temp"),
+            document.querySelector("#max"),
+            document.querySelector("#min"),
+            document.querySelector("#humidity"),
+            document.querySelector("#wind"),
+            document.querySelector("#sunrise"),
+            document.querySelector("#sunset"),
+            document.querySelector("#humidity-pic"),
+            document.querySelector("#wind-pic"),
+            document.querySelector("#rise-pic"),
+            document.querySelector("#set-pic")
+        ]
+
+        
 
         const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const today = daysOfWeek[new Date().getDay() ];
+        function getElement(add){
+          if(add == true){
+            for(let i = 0; i < main_elements; i++)
+            main_elements[i].classList.add('hidden')
+          }else if(add == false){
+            for(let i = 0; i < main_elements; i++)
+              main_elements[i].classList.remove('hidden')
+            }
 
+        }
 
         function startWeather(){
             if (localStorage.getItem("storedCity"))
         {
             document.querySelector("#date").innerHTML = today+", "+ new Date().toLocaleDateString();
             checkWeather(localStorage.getItem("storedCity"));
-
-                document.querySelector("#city").classList.remove('hidden');
-                document.querySelector("#weather").classList.remove('hidden');
-                document.querySelector("#weather-pic").classList.remove('hidden');
-                document.querySelector("#weather-desc").classList.remove('hidden');
-                document.querySelector("#temp").classList.remove('hidden');
-                document.querySelector("#max").classList.remove('hidden');
-                document.querySelector("#min").classList.remove('hidden');
-                document.querySelector("#humidity").classList.remove('hidden');
-                document.querySelector("#wind").classList.remove('hidden');
-                document.querySelector("#sunrise").classList.remove('hidden');
-                document.querySelector("#sunset").classList.remove('hidden');
-                document.querySelector("#humidity-pic").classList.remove('hidden');
-                document.querySelector("#wind-pic").classList.remove('hidden');
-                document.querySelector("#rise-pic").classList.remove('hidden');
-                document.querySelector("#set-pic").classList.remove('hidden');
-        }
-            else  { 
-                document.querySelector("#city").classList.add('hidden');
-                document.querySelector("#weather").classList.add('hidden');
-                document.querySelector("#weather-pic").classList.add('hidden');
-                document.querySelector("#weather-desc").classList.add('hidden');
-                document.querySelector("#temp").classList.add('hidden');
-                document.querySelector("#max").classList.add('hidden');
-                document.querySelector("#min").classList.add('hidden');
-                document.querySelector("#humidity").classList.add('hidden');
-                document.querySelector("#wind").classList.add('hidden');
-                document.querySelector("#sunrise").classList.add('hidden');
-                document.querySelector("#sunset").classList.add('hidden');
-                document.querySelector("#humidity-pic").classList.add('hidden');
-                document.querySelector("#wind-pic").classList.add('hidden');
-                document.querySelector("#rise-pic").classList.add('hidden');
-                document.querySelector("#set-pic").classList.add('hidden');
-        };
-            
-            
+            getElement(false)
+       }   else   
+            getElement(true)     
         }
         function fetchWeather(){
             localStorage.setItem("storedCity",document.getElementById('city-input').value);
@@ -153,21 +146,7 @@
             else {checkWeather(city)
 
                 document.querySelector("#date").innerHTML = today+", "+ new Date().toLocaleDateString();
-                document.querySelector("#city").classList.remove('hidden');
-                document.querySelector("#weather").classList.remove('hidden');
-                document.querySelector("#weather-pic").classList.remove('hidden');
-                document.querySelector("#weather-desc").classList.remove('hidden');
-                document.querySelector("#temp").classList.remove('hidden');
-                document.querySelector("#max").classList.remove('hidden');
-                document.querySelector("#min").classList.remove('hidden');
-                document.querySelector("#humidity").classList.remove('hidden');
-                document.querySelector("#wind").classList.remove('hidden');
-                document.querySelector("#sunrise").classList.remove('hidden');
-                document.querySelector("#sunset").classList.remove('hidden');
-                document.querySelector("#humidity-pic").classList.remove('hidden');
-                document.querySelector("#wind-pic").classList.remove('hidden');
-                document.querySelector("#rise-pic").classList.remove('hidden');
-                document.querySelector("#set-pic").classList.remove('hidden');
+              getElement(false)
             };
 
         }
@@ -187,8 +166,8 @@
 
         async function checkWeather(Givencity) {
             try{
-        const response = await fetch(`https://weather-api.onrender.com/weather?city=`  + Givencity);
-            let data = await response.json();
+                const response = await fetch(`/weather?city=`  + Givencity);
+                const data = await response.json();
 
             if(data.cod ==='404') {
                 showError("City not found, Please enter a valid city name.")
@@ -231,7 +210,6 @@
             document.querySelector("#sunset").innerHTML = "Sunset " + convertUnixToTime(sunsetTime);
         }catch (error) {
             showError("An error occurred. Please try again later.");
-            console.error("Error fetching data:" , error);
         }
 
 
@@ -243,7 +221,7 @@
 
         }
         
-        startWeather()
+        startWeather();
 
         
     </script>
